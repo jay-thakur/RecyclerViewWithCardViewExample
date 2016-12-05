@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    static View.OnLongClickListener myOnClickListener;
 
     List<Person> personList;
 
@@ -20,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        myOnClickListener = new MyOnClickListener();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         // use this setting to improve performance if you know that changes
@@ -37,11 +41,28 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    private class MyOnClickListener implements View.OnLongClickListener{
+
+        @Override
+        public boolean onLongClick(View view) {
+
+            removeAt(view);
+
+            return false;
+        }
+    }
+
+    public void removeAt(View view) {
+        int selectedItemPosition = mRecyclerView.getChildAdapterPosition(view);
+        personList.remove(selectedItemPosition);
+        mAdapter.notifyItemRemoved(selectedItemPosition);
+    }
+
     //initialize person data
     public void personData(){
         personList = new ArrayList<>();
-        personList.add(new Person("Ramesh Kumar", "Goplaganj"));
-        personList.add(new Person("Jay Prakash Thakur", "Goplaganj"));
+        personList.add(new Person("Ramesh Kumar", "Gopalganj"));
+        personList.add(new Person("Jay Prakash Thakur", "Gopalganj"));
         personList.add(new Person("Ramesh", "Bangalore"));
         personList.add(new Person("Jay", "Bangalore"));
         personList.add(new Person("Jay Thakur", "Mumbai"));

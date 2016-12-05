@@ -24,7 +24,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     public ContactAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_row, parent, false);
-        //view.setOnClickListener(MainActivity);
+        view.setOnLongClickListener(MainActivity.myOnClickListener);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
